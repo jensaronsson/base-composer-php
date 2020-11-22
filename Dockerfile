@@ -2,6 +2,8 @@ FROM php:7.4-fpm
 
 WORKDIR /app
 
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
 RUN apt-get update && \
   apt-get install -y \
   libpq-dev \
@@ -22,11 +24,7 @@ RUN echo "deb http://nginx.org/packages/debian/ stretch nginx" >> /etc/apt/sourc
   && apt-get update && apt-get install -y nginx \
   && rm -rf /var/lib/apt/lists/*
 
-RUN curl -s https://getcomposer.org/installer | php -- --quiet \
-  && mv composer.phar /usr/local/bin/composer \
-  && composer self-update \
-  && composer global require "hirak/prestissimo:^0.3" \
-  && pecl install redis \
+RUN pecl install redis \
   && docker-php-ext-enable redis \
   && docker-php-ext-install zip opcache pcntl sockets pdo pdo_pgsql
 
