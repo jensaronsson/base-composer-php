@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master, "8.0-fpm" ]
+    branches: [ master, "8.0-fpm", "8.0-swoole" ]
 
 jobs:
   docker:
