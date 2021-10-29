@@ -1,4 +1,4 @@
-FROM php:8.0.12-fpm
+FROM php:8.0.12
 
 WORKDIR /app
 
@@ -24,7 +24,7 @@ RUN echo "deb http://nginx.org/packages/debian/ stretch nginx" >> /etc/apt/sourc
   && apt-get update && apt-get install -y nginx \
   && rm -rf /var/lib/apt/lists/*
 
-RUN pecl install redis \
+RUN pecl install redis swoole \
   && docker-php-ext-enable redis \
   && docker-php-ext-install zip opcache pcntl sockets pdo pdo_pgsql
 
