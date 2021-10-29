@@ -16,7 +16,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: jensaronsson/base-compose-php
+          images: jensaronsson/base-composer-php
           tags: |
             type=ref,event=branch
       -
