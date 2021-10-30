@@ -24,8 +24,9 @@ RUN echo "deb http://nginx.org/packages/debian/ stretch nginx" >> /etc/apt/sourc
   && apt-get update && apt-get install -y nginx \
   && rm -rf /var/lib/apt/lists/*
 
-RUN pecl install redis swoole \
-  && docker-php-ext-enable redis \
+RUN pecl install redis \
+  && pecl install -D 'enable-openssl="yes" enable-http2="yes"' swoole \
+  && docker-php-ext-enable redis swoole \
   && docker-php-ext-install zip opcache pcntl sockets pdo pdo_pgsql
 
 RUN sed -i -e 's/# sv_SE.UTF-8 UTF-8/sv_SE.UTF-8 UTF-8/' /etc/locale.gen && \
