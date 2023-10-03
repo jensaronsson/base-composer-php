@@ -1,13 +1,15 @@
-FROM php:7.4-fpm
+FROM php:8.1-fpm
 
 WORKDIR /app
 
-COPY --from=composer /usr/bin/composer /usr/bin/composer
+COPY --from=composer/composer:2-bin /composer /usr/bin/composer
 
 RUN apt-get update && \
   apt-get install -y \
+  postgresql-client-15 \
   libpq-dev \
   libzip-dev \
+  lsb-release \
   gnupg2 \
   git \
   procps \
@@ -15,6 +17,15 @@ RUN apt-get update && \
   unzip \
   vim \
   locales \
+  && rm -rf /var/lib/apt/lists/*
+
+# Install postgres 15 client
+RUN echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+&& curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+
+RUN apt-get update && \
+  apt-get install -y \
+  postgresql-client-15 \
   && rm -rf /var/lib/apt/lists/*
 
 #Update to latest nginx
