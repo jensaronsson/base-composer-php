@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.5-fpm
 
 WORKDIR /app
 
@@ -18,9 +18,8 @@ RUN apt-get update && \
   && rm -rf /var/lib/apt/lists/*
 
 #Update to latest nginx
-RUN echo "deb http://nginx.org/packages/debian/ stretch nginx" >> /etc/apt/sources.list.d/nginx.list \
-  && echo "deb-src http://nginx.org/packages/debian/ stretch nginx" >> /etc/apt/sources.list.d/nginx.list \
-  && curl -L https://nginx.org/keys/nginx_signing.key | apt-key add - \
+RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | gpg --dearmor -o /usr/share/keyrings/nginx-archive-keyring.gpg \
+  && echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/debian/ bookworm nginx" > /etc/apt/sources.list.d/nginx.list \
   && apt-get update && apt-get install -y nginx \
   && rm -rf /var/lib/apt/lists/*
 
