@@ -23,8 +23,13 @@ RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | gpg --dearmor -o /usr/
   && apt-get update && apt-get install -y nginx \
   && rm -rf /var/lib/apt/lists/*
 
-RUN pecl install redis \
+RUN git clone https://github.com/phpredis/phpredis.git /tmp/phpredis \
+  && cd /tmp/phpredis \
+  && phpize \
+  && ./configure \
+  && make && make install \
   && docker-php-ext-enable redis \
+  && rm -rf /tmp/phpredis \
   && docker-php-ext-install zip opcache pcntl sockets pdo pdo_pgsql
 
 RUN sed -i -e 's/# sv_SE.UTF-8 UTF-8/sv_SE.UTF-8 UTF-8/' /etc/locale.gen && \
