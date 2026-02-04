@@ -9,6 +9,7 @@ RUN apt-get update && \
   libpq-dev \
   libzip-dev \
   gnupg2 \
+  curl \
   git \
   procps \
   zip \
