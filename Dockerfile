@@ -6,7 +6,6 @@ COPY --from=composer/composer:2-bin /composer /usr/bin/composer
 
 RUN apt-get update && \
   apt-get install -y \
-  postgresql-client-15 \
   libpq-dev \
   libzip-dev \
   lsb-release \
@@ -19,13 +18,13 @@ RUN apt-get update && \
   locales \
   && rm -rf /var/lib/apt/lists/*
 
-# Install postgres 15 client
+# Install postgres 18 client
 RUN echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
 && curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 RUN apt-get update && \
   apt-get install -y \
-  postgresql-client-15 \
+  postgresql-client-18 \
   && rm -rf /var/lib/apt/lists/*
 
 #Update to latest nginx
