@@ -10,6 +10,7 @@ RUN apt-get update && \
   libzip-dev \
   lsb-release \
   gnupg2 \
+  curl \
   git \
   procps \
   zip \
